@@ -4,28 +4,85 @@ import bcrypt from "bcryptjs";
 
 const login = async (req, res) => {
   const { Email, password, userrole } = req.body;
+
   console.log(Email, password);
+  if (!Email ||!password) {
+    return res.status(400).json({ message: "Please enter all fields" });
+  }
 
-  try {
-    const user = await Users.find({ Email: Email });
+  const userRole=userrole.toLowerCase();
 
-    if (user.userrole == userrole) {
-      const match = await bcrypt.compare(user.password, password);
-      if (match) {
-        res.json({
-          user: user,
-          message: "Success",
-        });
-      } else {
-        res.status(400).json({ message: "Passsword Incorrect" });
+  if(userRole=="admin"){
+    try {
+        const user = await Users.find({ Email: Email ,userRole:userrole});
+    
+        if (user) {
+          const match = await bcrypt.compare(user.password, password);
+          if (match) {
+            res.json({
+              user: user,
+              message: "Success",
+            });
+          } else {
+            res.status(400).json({ message: "Passsword Incorrect" });
+          }
+        } else {
+          res
+            .status(400)
+            .json({ message: "You are not a Admin" });
+        }
+      } catch (error) {
+        res.status(404).json("Server Error");
       }
-    } else {
-      res
-        .status(400)
-        .json({ message: "User not found Or You are not a Admin" });
-    }
-  } catch (error) {
-    res.status(404).json("Server Error");
+  }
+
+  if(userRole==="department staff"){
+    try {
+        const user = await Users.find({ Email: Email ,userRole:userrole});
+    
+        if (user) {
+          const match = await bcrypt.compare(user.password, password);
+          if (match) {
+            res.json({
+              user: user,
+              message: "Success",
+            });
+          } else {
+            res.status(400).json({ message: "Passsword Incorrect" });
+          }
+        } else {
+          res
+            .status(400)
+            .json({ message: "your are not regitstered... please ask for your credentials " });
+        }
+      } catch (error) {
+        res.status(404).json("Server Error");
+      }
+  }
+
+  if(userRole===userrole){
+
+      try {
+        const user = await Users.find({ Email: Email ,userRole:userrole});
+    
+        if (user) {
+          const match = await bcrypt.compare(user.password, password);
+          if (match) {
+            res.json({
+              user: user,
+              message: "Success",
+            });
+          } else {
+            res.status(400).json({ message: "Passsword Incorrect" });
+          }
+        } else {
+          res
+            .status(400)
+            .json({ message: "Your are not Inventory " });
+        }
+      } catch (error) {
+        res.status(404).json("Server Error");
+      }
   }
 };
 
@@ -95,7 +152,7 @@ const SignupInvertoryStaff= async (req, res) => {
         Email: Email,
         PhoneNumber:Phone,
         password: hashedPassword,
-        userRole:"Invertory Staff"
+        userRole:"Invertory Department"
       });
       await newUser.save();
       res.json({ message: "Staff registered successfully" });
