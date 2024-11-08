@@ -15,8 +15,11 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(Email)
+    console.log(Password)
+    console.log(userRole)
     try {
-      setLoader(true);
+    //   setLoader(true);
       axios
         .post(`${import.meta.env.VITE_DEV_URL}users/login`, {
           Email,
@@ -28,14 +31,16 @@ const LoginForm = () => {
           if (res.data.message === "Success") {
             setLoader(false);
             alert("Login Successful");
-            window.localStorage.setItem("Username", res.data.user.Name);
-            navigate("/");
+            // window.localStorage.setItem("Username", res.data.user.Name);
+            // navigate("/");
           } else {
             setError(res.data);
+            setLoader(false);
           }
         })
         .catch((err) => {
           console.log(err);
+          setLoader(false);
           setLoader(false);
         });
     } catch (error) {
