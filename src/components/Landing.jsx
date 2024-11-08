@@ -23,16 +23,12 @@ const SchoolManagementLandingPage = () => {
                     Say goodbye to manual tracking and inefficiencies. InvenTrak is designed to simplify file movement between departments and automate inventory processes at IIIT Bhubaneswar. Our goal is to improve operational efficiency, enhance transparency, and reduce administrative overhead.
                     </p>
 
-                    <div className="flex justify-center md:justify-start space-x-4 mb-4">
-                        <button className="bg-[#114fee] w-32 text-center text-xl text-white py-2 px-6 rounded "><a href='/login'>Login</a>
+                    <div className="flex justify-center align-middle items-center   md:justify-start space-x-4 mb-4">
+                   <a href='/login'  className='bg-[#117554] w-48  text-center text-xl text-white py-2 px-4 rounded-md '>Login</a>
                            
-                        </button>
+                       
                        
                     </div>
-
-                    <p className="text-gray-600">
-                        Don’t have an account? <a href="/signup" className="text-[#114fee] hover:underline">Sign up</a>
-                    </p>
                 </div>
             </div>
         </div>
