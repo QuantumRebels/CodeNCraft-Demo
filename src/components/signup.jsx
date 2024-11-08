@@ -45,10 +45,10 @@ const Signup = () => {
         onSubmit={handleSubmit}
       >
         <div className="text-center">
-          <h2 className="text-3xl lg:text-4xl my-2 flex justify-center items-center py-2 font-semibold tracking-tighter bg-gradient-to-b from-neutral-50 via-neutral-300 to-neutral-700 bg-clip-text text-transparent">
+          <h2 className=" text-4xl justify-center font-semibold align-middle items-center text-[#15B392]">
             Register
           </h2>
-          <p className="mt-2 text-sm text-gray-400">
+          <p className="mt-2 mb-2 p-2 text-xm text-[#1A1A1B]">
             Signup now and get full access to our app.
           </p>
         </div>
@@ -62,10 +62,10 @@ const Signup = () => {
               name="firstName"
               value={FName}
               onChange={(e) => setFName(e.target.value)}
-              className={`peer w-full form-border text-black    px-0 py-2 placeholder:text-transparent focus:border-blue-600 focus:outline-none `}
+              className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-gray-400  focus:outline-none`}
               placeholder="First name"
             />
-            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-gray-500 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 ">
+            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
               Firstname
             </label>
           </div>
@@ -77,10 +77,10 @@ const Signup = () => {
               name="lastName"
               value={LName}
               onChange={(e) => setLName(e.target.value)}
-              className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-blue-600 focus:outline-none `}
+              className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
               placeholder="Last name"
             />
-            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-gray-500 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600">
+            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
               Lastname
             </label>
           </div>
@@ -93,10 +93,10 @@ const Signup = () => {
             name="email"
             value={Email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`peer w-full text-black form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-blue-600 focus:outline-none `}
+            className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
             placeholder="Email"
           />
-          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-gray-500 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 ">
+          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
             Email
           </label>
         </div>
@@ -107,10 +107,10 @@ const Signup = () => {
             name="Phone"
             value={Phone}
             onChange={(e) => setPhone(e.target.value)}
-            className={`peer w-full text-black form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-blue-600 focus:outline-none `}
+            className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-gray-400 focus:outline-none  `}
             placeholder="Phone number"
           />
-          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-gray-500 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 ">
+          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392] ">
             Phone no.
           </label>
         </div>
@@ -122,10 +122,10 @@ const Signup = () => {
             name="password"
             value={password}
             onChange={(e) => setpassword(e.target.value)}
-            className={`peer w-full text-black form-border px-0 py-2 form-border placeholder:text-transparent focus:border-blue-600 focus:outline-none `}
+            className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
             placeholder="Password"
           />
-          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-gray-500 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 form-border">
+          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392] form-border">
             Password
           </label>
         </div>
@@ -137,10 +137,10 @@ const Signup = () => {
             name="confirmPassword"
             value={CPassword}
             onChange={(e) => setCPassword(e.target.value)}
-            className={`peer form-border text-black w-full border-b-2 border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-blue-600 focus:outline-none `}
+            className={`peer form-border text-black w-full border-b-2 border-gray-300 px-0 py-2 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
             placeholder="Confirm password"
           />
-          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-gray-500 duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600">
+          <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
             Confirm password
           </label>
         </div>
@@ -149,7 +149,7 @@ const Signup = () => {
         <button
           type="submit"
           disabled={Loader === true}
-          className="w-full transform rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full transform rounded-lg bg-[#15B392] px-3 py-3 text-xl font-medium text-white transition-colors hover:bg-[#15B392] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           {Loader ? <span>Submitting</span> : <span>Submit</span>}
         </button>
@@ -158,11 +158,11 @@ const Signup = () => {
         </div>
 
         {/* Sign In Link */}
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-[#1A1A1B]">
           Already have an account?{" "}
           <a
             href="/login"
-            className="font-medium text-blue-600 hover:text-blue-500"
+            className="font-medium text-[#15B392] hover:text-[#15B392]"
           >
             Sign in
           </a>
