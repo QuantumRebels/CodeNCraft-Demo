@@ -1,5 +1,6 @@
 import express from "express";
 import UserRouter from "./routes/UserRoutes";
+import connectdb from "./db/db.js";
 
 const app = express();
 
@@ -14,7 +15,9 @@ app.use(
 
 app.use(express.json());
 
-app.use("/", (req, res) => {
+connectdb()
+
+app.get("/", (req, res) => {
   res.send("App is working!!");
 });
 
