@@ -11,6 +11,10 @@ const userSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
+    Department:{
+        type:String,
+        required:true
+    },
     PhoneNumber:{
         type:String,
         required:true,
@@ -22,7 +26,7 @@ const userSchema=new mongoose.Schema({
     },
     userRole:{
         type:String,
-        default:'user'
+        default:'Department Staff'
     }
 },{timestamps:true})
 
