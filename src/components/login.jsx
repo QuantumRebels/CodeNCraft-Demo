@@ -18,8 +18,11 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(Email)
+    console.log(Password)
+    console.log(userRole)
     try {
-      setLoader(true);
+    //   setLoader(true);
       axios
         .post(`${import.meta.env.VITE_DEV_URL}users/login`, {
           Email,
@@ -31,14 +34,16 @@ const LoginForm = () => {
           if (res.data.message == "Success") {
             setLoader(false);
             alert("Login Successful");
-            window.localStorage.setItem("Username", res.data.user.Name);
-            navigate("/");
+            // window.localStorage.setItem("Username", res.data.user.Name);
+            // navigate("/");
           } else {
             setError(res.data);
+            setLoader(false);
           }
         })
         .catch((err) => {
           console.log(err);
+          setLoader(false);
         });
     } catch (error) {
       console.error(error);
@@ -57,10 +62,10 @@ const LoginForm = () => {
             Login
           </h1>
           <label for="userRole">User Role:</label>
-          <select onChange={e=>setuserRole(e.target.value)}  id="selection" name="userRole">
+          <select onChange={e=>setuserRole(e.target.value)} value={userRole}  id="selection" name="userRole">
             <option  value="Admin">Admin</option>
-            <option value="Department Staff">Staff</option>
-            <option value="Invertory Department">Invertory Department</option>
+            <option value="Department Staff">Department Staff</option>
+            <option value="Inventory Department">Inventory Department</option>
           </select>
 
           <label className="text-sm font-medium text-gray-400">Email</label>
