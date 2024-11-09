@@ -7,6 +7,7 @@ import
  from 'recharts';
  import Stock from './stock'
 import InventoryTable from './inventorytable';
+import Order from './create'
 function Home() {
 
 
@@ -32,6 +33,10 @@ function Home() {
                  
                 </div>
                 <h1 className='text-2xl'>20</h1>
+            </div>
+            <div className='card-3'>
+               <Order/>
+               
             </div>
          
       
