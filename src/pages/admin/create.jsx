@@ -38,6 +38,7 @@ const FileCreateDialog = () => {
         })
         .then((res) => {
           console.log(res.data);
+          window.location.reload();
         });
     } catch (error) {
       console.error(error);

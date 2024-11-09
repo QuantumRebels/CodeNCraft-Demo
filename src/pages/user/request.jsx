@@ -6,6 +6,7 @@ const FileStatusTable = () => {
   const [fileData, setFiledata] = useState([])
   const currentuser=window.localStorage.getItem('InvertrekUsername')
   const dept=window.localStorage.getItem('InvertrekUserDepartment')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
 
   const fetchfiles=async()=>{
@@ -108,7 +109,7 @@ const FileStatusTable = () => {
                   className="details-link"
                   onClick={() => handleDetailsClick(file._id)}
                 >
-                  <BsPlus className="text-orange-500 text-2xl" /> {/* Display "+" icon here */}
+                  {/* <BsPlus className="text-orange-500 text-2xl" /> Display "+" icon here */}
                 </button>
               </td>
             </tr>
@@ -124,10 +125,10 @@ const FileStatusTable = () => {
             <p className='text-black'><strong>File ID:</strong> {selectedFile._id}</p>
             <p className='text-black'><strong>Owned By:</strong> {selectedFile.SourceDept}</p>
             <p className='text-black'><strong>Department:</strong> {selectedFile.Department}</p>
-            <p className='text-black'><strong>Location:</strong> {selectedFile.location}</p>
-            <p className='text-black'><strong>Status:</strong> {selectedFile.status}</p>
-            <p className='text-black'><strong>Contents:</strong> {selectedFile.contents}</p>
-            <p className='text-black'><strong>Description:</strong> {selectedFile.description}</p>
+            <p className='text-black'><strong>Location:</strong> {selectedFile.Location}</p>
+            <p className='text-black'><strong>Status:</strong> {selectedFile.Status}</p>
+            <p className='text-black'><strong>Description:</strong> {selectedFile.FileDescription}</p>
+            {/* <p className='text-black'><strong>Description:</strong> {selectedFile.description}</p> */}
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
               onClick={closeModal}

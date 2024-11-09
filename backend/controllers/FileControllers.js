@@ -55,7 +55,7 @@ const requestfile=async(req,res)=>{
 }
 
 const approvefile=async(req,res)=>{
-    const {fileid}=req.body
+    const {fileid,currentUser,Department}=req.body
     console.log(fileid)
     try {
         const file=await files.findByIdAndUpdate(fileid,{Status:"Approved",Location:`${currentUser}(${Department})`})
