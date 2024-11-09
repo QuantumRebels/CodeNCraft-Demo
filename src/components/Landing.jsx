@@ -31,6 +31,7 @@ const SchoolManagementLandingPage = () => {
                     </div>
                 </div>
             </div>
+       
         </div>
     );
 };
