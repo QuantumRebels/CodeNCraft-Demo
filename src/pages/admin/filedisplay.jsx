@@ -18,8 +18,9 @@ const FileRequestAdmin = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get(`${import.meta.env.VITE_DEV_URL}files/api/getallfiles`);
+      console.log(res)
       // Ensure requests are set to an array
-      setRequests(Array.isArray(res.data) ? res.data : []);
+      setRequests(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -31,6 +32,7 @@ const FileRequestAdmin = () => {
 
   // Function to handle the Accept action
   const handleAccept = async (fileid) => {
+    console.log(fileid)
     
     try {
 
@@ -60,10 +62,20 @@ const FileRequestAdmin = () => {
   };
 
   // Function to open the modal with details
-  const handleDetailsClick = (request) => {
+  const handleDetailsClick = async(id) => {
 
-    setSelectedRequest(request);
     setIsModalOpen(true);
+    console.log(id)
+    try {
+      await axios.get(`${import.meta.env.VITE_DEV_URL}files/api/details`,{id})
+      .then(res=>{
+        console.log(res.data)
+        setSelectedRequest(res.data)
+        
+      })
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   // Function to close the modal
@@ -78,17 +90,19 @@ const FileRequestAdmin = () => {
       <table className="file-request-table">
         <thead>
           <tr>
-            <th>File ID</th>
-            <th>Department</th>
+            <th>File Name</th>
+            <th>Initiator Name</th>
             <th>Actions</th>
+            <th>Requested By</th>
+
             <th>Details</th>
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(requests) && requests.map((request) => (
-            <tr key={request.id}>
-              <td>{request.id}</td>
-              <td>{request.department}</td>
+          { requests.map((request,index) => (
+            <tr key={index}>
+              <td>{request.FileName}</td>
+              <td>{request.InitiatorName}</td>
               <td>
 
                 {request.Status === 'Requested' ? (
@@ -98,11 +112,12 @@ const FileRequestAdmin = () => {
 
                   </>
                 ) : (
-                  <span>{request.status}</span>
+                  <span>{request.Status}</span>
                 )}
               </td>
+              <td>{request.RequestedBy}</td>
               <td>
-                <button onClick={() => handleDetailsClick(request)} className="details-link">
+                <button onClick={() => handleDetailsClick(request._id)} className="details-link">
                   <span className="text-blue-500">+</span>
                 </button>
               </td>
@@ -116,10 +131,10 @@ const FileRequestAdmin = () => {
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg max-w-lg w-full">
             <h3 className="text-2xl text-black font-semibold mb-4">Request Details</h3>
-            <p className="text-black"><strong>File ID:</strong> {selectedRequest.id}</p>
-            <p className="text-black"><strong>Department:</strong> {selectedRequest.department}</p>
-            <p className="text-black"><strong>Current Location:</strong> {selectedRequest.currentLocation}</p>
-            <p className="text-black"><strong>Status:</strong> {selectedRequest.status}</p>
+            <p className="text-black"><strong>File ID:</strong> {selectedRequest._id}</p>
+            <p className="text-black"><strong>Department:</strong> {selectedRequest.Department}</p>
+            <p className="text-black"><strong>Current Location:</strong> {selectedRequest.Location}</p>
+            <p className="text-black"><strong>Status:</strong> {selectedRequest.Status}</p>
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
               onClick={closeModal}
