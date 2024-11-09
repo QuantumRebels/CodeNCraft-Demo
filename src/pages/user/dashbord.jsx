@@ -5,51 +5,51 @@ import
  import 
  { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } 
  from 'recharts';
-
+import Request from  './request'
 function Home() {
 
     const data = [
         {
-          name: 'Page A',
-          uv: 4000,
-          pv: 2400,
-          amt: 2400,
+          name: 'Claim 1',
+          uv: 4,
+          pv: 2.4,
+          amt: 2.4,
         },
         {
-          name: 'Page B',
-          uv: 3000,
-          pv: 1398,
-          amt: 2210,
+          name: 'Claim 2',
+          uv: 3,
+          pv: 2,
+          amt: 1.75,
         },
         {
-          name: 'Page C',
-          uv: 2000,
-          pv: 9800,
-          amt: 2290,
+          name: 'Claim 3',
+          uv: 2,
+          pv: 5,
+          amt: 3,
         },
         {
-          name: 'Page D',
-          uv: 2780,
-          pv: 3908,
-          amt: 2000,
+          name: 'Claim 4',
+          uv: 2.7,
+          pv: 3.9,
+          amt: 2,
         },
         {
-          name: 'Page E',
-          uv: 1890,
-          pv: 4800,
-          amt: 2181,
+          name: 'Claim 5',
+          uv: 1.8,
+          pv: 4.8,
+          amt: 2.1,
         },
         {
-          name: 'Page F',
-          uv: 2390,
-          pv: 3800,
-          amt: 2500,
+          name: 'Claim 6',
+          uv: 2.3,
+          pv: 3.8,
+          amt: 2.5,
         },
         {
-          name: 'Page G',
-          uv: 3490,
-          pv: 4300,
-          amt: 2100,
+          name: 'Claim 7',
+          uv: 3.4,
+          pv: 4.3,
+          amt: 2.1,
         },
       ];
      
@@ -63,32 +63,26 @@ function Home() {
         <div className='main-cards'>
             <div className='card'>
                 <div className='card-inner'>
-                    <h3>PRODUCTS</h3>
-                    <BsFillArchiveFill className='card_icon'/>
+                    <h3>No. of Files Claimed</h3>
+                 
                 </div>
-                <h1>300</h1>
+                <h1>30</h1>
             </div>
             <div className='card'>
                 <div className='card-inner'>
-                    <h3>CATEGORIES</h3>
-                    <BsFillGrid3X3GapFill className='card_icon'/>
+                    <h3>No. of files Accepted</h3>
+                 
                 </div>
-                <h1>12</h1>
+                <h1>20</h1>
             </div>
             <div className='card'>
                 <div className='card-inner'>
-                    <h3>CUSTOMERS</h3>
-                    <BsPeopleFill className='card_icon'/>
+                    <h3>No. of Files Rejected</h3>
+                    
                 </div>
-                <h1>33</h1>
+                <h1>10</h1>
             </div>
-            <div className='card'>
-                <div className='card-inner'>
-                    <h3>ALERTS</h3>
-                    <BsFillBellFill className='card_icon'/>
-                </div>
-                <h1>42</h1>
-            </div>
+      
         </div>
 
         <div className='charts'>
@@ -137,6 +131,7 @@ function Home() {
             </ResponsiveContainer>
 
         </div>
+        <Request/>
     </main>
   )
 }

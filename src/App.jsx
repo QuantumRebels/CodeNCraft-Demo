@@ -4,7 +4,10 @@ import Landing from './components/Landing'
 import Login from './components/login';
 import Signup from './components/signup';
 import UserDashboard from './pages/user/app'
-import InventoryTable from './pages/inventory/inventory';
+
+import AdminDashboard from './pages/admin/app2'
+import Request from './pages/user/request'
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -13,7 +16,11 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/userdashboard' element={<UserDashboard />} />
-        <Route path='/inventory' element={<InventoryTable />} />
+
+      
+        <Route path='/admindashboard' element={<AdminDashboard />} />
+        <Route path='/request' element={<Request />} />
+
       </Routes>
     </BrowserRouter>
 

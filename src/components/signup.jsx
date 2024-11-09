@@ -19,19 +19,24 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  
+
   const handleSubmit =  (e) => {
     e.preventDefault()
     const Username=FName+" "+LName
     try {
-      axios.post(`${import.meta.env.VITE_DEV_URL}users/signup`,{Username,Email,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
+      // setLoader(true)
+      axios.post(`${import.meta.env.VITE_DEV_URL}users/register`,{Username,Email,Phone,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
       .then(res=>{
         console.log(res)
         alert("User Registered Successfully")
-        window.localStorage.setItem("Username",FName)
-        navigate("/")
+        setLoader(false)
+        // window.localStorage.setItem("Username",FName)
+        // navigate("/")
       })
     } catch (error) {
       seterror("Failed to register. Please try again later.")
+      setLoader(false)
     }
   }
 
@@ -100,7 +105,7 @@ const Signup = () => {
         {/* Phone Field */}
         <div className="relative">
           <input
-            type="number"
+            type="text"
             name="Phone"
             value={Phone}
             onChange={(e) => setPhone(e.target.value)}
