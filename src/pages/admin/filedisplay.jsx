@@ -115,6 +115,7 @@ const FileRequestAdmin = () => {
                   <span>{request.Status}</span>
                 )}
               </td>
+              
               <td>{request.RequestedBy}</td>
               <td>
                 <button onClick={() => handleDetailsClick(request._id)} className="details-link">
