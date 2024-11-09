@@ -2,6 +2,7 @@ import express from "express";
 import  UserRouter from './routes/UserRoutes.js'
 import connectdb from "./db/db.js";
 import cors from 'cors'
+import FileRouter from "./routes/FileRoute.js";
 
 const app = express();
 
@@ -24,5 +25,6 @@ app.get("/", (req, res) => {
 
 
 app.use('/users',UserRouter)
+app.use('/files/api',FileRouter)
 
 app.listen(5000, () => console.log("Server is running on port 5000"));

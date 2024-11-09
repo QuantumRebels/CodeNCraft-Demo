@@ -15,9 +15,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(Email)
-    console.log(Password)
-    console.log(userRole)
+    
     try {
     //   setLoader(true);
       axios
@@ -27,7 +25,7 @@ const LoginForm = () => {
           userRole,
         })
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
           if (res.data.message === "Success") {
             setLoader(false);
             alert("Login Successful");
@@ -41,7 +39,7 @@ const LoginForm = () => {
         .catch((err) => {
           console.log(err);
           setLoader(false);
-          setLoader(false);
+          
         });
     } catch (error) {
       console.error(error);
@@ -54,7 +52,7 @@ const LoginForm = () => {
         onSubmit={handleSubmit}
         className="w-full max-w-md space-y-6 rounded-lg form-login p-8 shadow-lg"
       >
-        <h1 className="text-4xl p-2 mb-4 font-bold text-center align-middle items-center text-[#3C552D] font-semibold">
+        <h1 className="text-4xl p-2 mb-4  text-center align-middle items-center text-[#3C552D] font-semibold">
           Login
         </h1>
 
@@ -68,8 +66,8 @@ const LoginForm = () => {
           >
             <option value="" disabled>Select Role</option>
             <option value="Admin" >Admin</option>
-            <option value="User">User</option>
-            <option value="Inventory">Inventory Manager</option>
+            <option value="Department Staff">Department Staff</option>
+            <option value="Inventory Staff">Inventory Staff</option>
           </select>
         </div>
 

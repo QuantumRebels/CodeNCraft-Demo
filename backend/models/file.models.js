@@ -21,7 +21,7 @@ const FileSchema = new mongoose.Schema(
     },
     To: {
       type: String,
-      required: true,
+    //   required: true,
       default: null,
     },
     InitiatorName: {
