@@ -205,6 +205,7 @@
   justify-content: space-between;
   padding: 0 30px 0 30px;
   box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+  background-color: #2e7d32;
 }
 
 .menu-icon {
@@ -306,6 +307,7 @@
   margin: 15px 0;
 }
 
+
 .card {
   display: flex;
   flex-direction: column;
@@ -333,11 +335,28 @@
   margin: 20px 20px;
 
 }
+.card-3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8px 15px;
+  border-radius: 5px;
+  width : 250px;
+  height: 130px;
+  padding: 10px 10px;
+  margin: 20px 20px;
+  margin-bottom: 40px;
+}
 
 .card:first-child {
   background-color: #2962ff;
 }
 .card2:first-child {
+  background-color: #2962ff;
+}
+.card-3:first-child {
   background-color: #2962ff;
 }
 
@@ -347,11 +366,17 @@
 .card2:nth-child(2) {
   background-color: #ff6d00;
 }
+.card-3:nth-child(2) {
+  background-color: #ff6d00;
+}
 
 .card:nth-child(3) {
   background-color: #2e7d32;
 }
 .card2:nth-child(3) {
+  background-color: #2e7d32;
+}
+.card-3:nth-child(3) {
   background-color: #2e7d32;
 }
 
@@ -472,7 +497,7 @@ h2 {
   cursor: pointer;
   font-size: 1rem;
   padding: 0;
-  text-decoration: underline;
+  
 }
 
 .request-link:hover {
@@ -619,7 +644,7 @@ h2 {
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color:whitesmoke;
+  background-color:white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -667,4 +692,16 @@ h2 {
 
 .reject-btn:hover {
   background-color: #d32f2f;
+}
+
+.main-cards-3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: row;
+}
+.card-3 {
+  height : 150px;
+  width: 250px;
 }

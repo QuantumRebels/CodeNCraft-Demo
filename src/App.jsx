@@ -4,10 +4,10 @@ import Landing from './components/Landing'
 import Login from './components/login';
 import Signup from './components/signup';
 import UserDashboard from './pages/user/app'
-
+import Inventory from './pages/inventory/inventorytable'
 import AdminDashboard from './pages/admin/app2'
 import Request from './pages/user/request'
-
+import Inventorypage from './pages/inventory/app3'
 const App = () => {
   return (
     <BrowserRouter>
@@ -20,6 +20,7 @@ const App = () => {
       
         <Route path='/admindashboard' element={<AdminDashboard />} />
         <Route path='/request' element={<Request />} />
+        <Route path='/inventory' element={<Inventorypage />} />
 
       </Routes>
     </BrowserRouter>

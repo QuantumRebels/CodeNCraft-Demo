@@ -5,7 +5,7 @@ import
 
 function Header({OpenSidebar}) {
   return (
-    <header className='header bg-[#117554]'>
+    <header className='header'>
         <div className='menu-icon'>
             <BsJustify className='icon' onClick={OpenSidebar}/>
         </div>
