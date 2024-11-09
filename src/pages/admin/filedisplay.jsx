@@ -99,7 +99,7 @@ const FileRequestAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          { requests.map((request,index) => (
+          {/* { requests.map((request,index) => (
             <tr key={index}>
               <td>{request.FileName}</td>
               <td>{request.InitiatorName}</td>
@@ -122,7 +122,7 @@ const FileRequestAdmin = () => {
                 </button>
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const FileCreateDialog = () => {
+const FileCreateDialog = ({ currentUser }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
 
   const [FName, setFName] = useState("");
   const [LName, setLName] = useState("");
@@ -10,213 +10,153 @@ const FileCreateDialog = () => {
   const [CPassword, setCPassword] = useState("");
   const [password, setpassword] = useState("");
   const [Phone, setPhone] = useState("");
-  const [Department, setDepartment] = useState("")
+  const [Department, setDepartment] = useState("");
 
-  const [userRole, setuserRole] = useState(""); 
-
-  const [Loader, setLoader] = useState(false)
-  const [error, seterror] = useState("")
+  const [Loader, setLoader] = useState(false);
+  const [error, seterror] = useState("");
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => {
     setIsDialogOpen(false);
-    setMessage('');
-    setFileName('');
-    setFileDescription('');
-    setFileType('');
-    setFileImage(null);
+    setFName('');
+    setLName('');
+    setEmail('');
+    setCPassword('');
+    setpassword('');
+    setPhone('');
+    setDepartment('');
+    seterror('');
   };
 
-  const handleSubmit =  (e) => {
-    e.preventDefault()
-    const Username=FName+" "+LName
-    if(currentUser==="Admin"){
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const Username = `${FName} ${LName}`;
 
-      try {
-        // setLoader(true)
-        axios.post(`${import.meta.env.VITE_DEV_URL}users/registerAdmin`,{Username,Email,Phone,Department,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
-        .then(res=>{
-          console.log(res.data.message)
-          alert(res.data.message)
-          
-          setLoader(false)
-          // window.localStorage.setItem("Username",FName)
-          // navigate("/")
-        })
-      } catch (error) {
-        seterror("Failed to register. Please try again later.")
-        setLoader(false)
-      }
+    if (password !== CPassword) {
+      seterror("Passwords do not match");
+      return;
     }
-    if(currentUser==="Invertory Staff"){
-      try {
-        // setLoader(true)
-        axios.post(`${import.meta.env.VITE_DEV_URL}users/registerAdmin`,{Username,Email,Phone,Department,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
-        .then(res=>{
-          console.log(res)
-          alert("User Registered Successfully")
-          
-          setLoader(false)
-          // window.localStorage.setItem("Username",FName)
-          // navigate("/")
-        })
-      } catch (error) {
-        seterror("Failed to register. Please try again later.")
-        setLoader(false)
-      }
+
+    setLoader(true);
+    seterror("");
+
+    try {
+      const endpoint = currentUser === "Admin"
+        ? `${import.meta.env.VITE_DEV_URL}users/registerAdmin`
+        : `${import.meta.env.VITE_DEV_URL}users/registerInventoryStaff`;
+      
+      const response = await axios.post(endpoint, {
+        Username,
+        Email,
+        Phone,
+        Department,
+        password
+      });
+      
+      alert(response.data.message || "User Registered Successfully");
+      closeDialog();
+    } catch (error) {
+      seterror("Failed to register. Please try again later.");
+    } finally {
+      setLoader(false);
     }
-  }
+  };
 
   return (
     <div>
       <button onClick={openDialog} className="open-dialog-btn">Create User</button>
 
       {isDialogOpen && (
-        <div className="h-max-screen register-background flex items-center justify-center py-0 px-0 sm:px-0 lg:px-0 mt-10" >
-        <form
-          className="max-w-md w-full space-y-8 register-login p-8 rounded-lg shadow-lg"
-          onSubmit={handleSubmit}
-        >
-          <div className="text-center">
-            <h2 className=" text-4xl justify-center font-semibold align-middle items-center text-[#15B392]">
-              Register
-            </h2>
-            <p className="mt-1 mb-1 p-1 text-xm text-[#1A1A1B]">
-              Signup now and get full access to our app.
-            </p>
-          </div>
-  
-          {/* Name Fields */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* First Name */}
-            <div className="relative">
-              <input
-                type="text"
-                name="firstName"
-                value={FName}
-                onChange={(e) => setFName(e.target.value)}
-                className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-0 placeholder:text-transparent focus:border-gray-400  focus:outline-none`}
-                placeholder="First name"
-              />
-              <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
-                Firstname
-              </label>
-            </div>
-  
-            {/* Last Name */}
-            <div className="relative">
-              <input
-                type="text"
-                name="lastName"
-                value={LName}
-                onChange={(e) => setLName(e.target.value)}
-                className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-0 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
-                placeholder="Last name"
-              />
-              <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
-                Lastname
-              </label>
-            </div>
-          </div>
-  
-          {/* Email Field */}
-          <div className="relative">
-            <input
-              type="email"
-              name="email"
-              value={Email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-0 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
-              placeholder="Email"
-            />
-            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
-              Email
-            </label>
-          </div>
-          {/* Phone Field */}
-          <div className="relative">
-            <input
-              type="text"
-              name="Phone"
-              value={Phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-0 placeholder:text-transparent focus:border-gray-400 focus:outline-none  `}
-              placeholder="Phone number"
-            />
-            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392] ">
-              Phone no.
-            </label>
-          </div>
-           {/* User Role Selection */}
-           <div className="space-y-2">
-            <label className="text-sm font-medium text-[#A1A1D]">Department</label>
-            <select
-              value={Department}
-              onChange={(e) => setDepartment(e.target.value)}
-              className="w-full text-gray-400 rounded-md border border-gray-400 py-2 px-3"
-            >
-              <option value="" disabled>Select Role</option>
-              <option value="Accounts" >Accounts</option>
-              <option value="Admission">Admission</option>
-              <option value="Academeics">Academics</option>
-            </select>
-          </div>
-  
-          {/* Password Field */}
-          <div className="relative">
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
-              className={`peer w-full text-black border-b-2 form-border border-gray-300 px-0 py-0 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
-              placeholder="Password"
-            />
-            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392] form-border">
-              Password
-            </label>
-          </div>
-  
-          {/* Confirm Password Field */}
-          <div className="relative">
-            <input
-              type="password"
-              name="confirmPassword"
-              value={CPassword}
-              onChange={(e) => setCPassword(e.target.value)}
-              className={`peer form-border text-black w-full border-b-2 border-gray-300 px-0 py-0 placeholder:text-transparent focus:border-gray-400 focus:outline-none `}
-              placeholder="Confirm password"
-            />
-            <label className="pointer-events-none absolute left-1 top-1 origin-left -translate-y-6 scale-75 transform text-[#1A1A1B] duration-150 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#15B392]">
-              Confirm password
-            </label>
-          </div>
-  
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={Loader === true}
-            className="w-full transform rounded-lg bg-[#15B392] px-0 py-0 text-xl font-medium text-white transition-colors hover:bg-[#15B392] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            {Loader ? <span>Submitting</span> : <span>Submit</span>}
-          </button>
-          <div className="text-center">
-            <span className="text-red-600 text-xs uppercase">{error}</span>
-          </div>
-  
-          {/* Sign In Link */}
-          <p className="text-center text-sm text-[#1A1A1B]">
-            Already have an account?{" "}
-            <a
-              href="/login"
-              className="font-medium text-[#15B392] hover:text-[#15B392]"
-            >
-              Sign in
-            </a>
-          </p>
-        </form>
-      </div>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <h2 className="text-2xl font-semibold text-center text-[#15B392]">Register</h2>
+              <p className="text-center text-sm text-gray-600">Signup now and get full access to our app.</p>
 
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="First name"
+                  value={FName}
+                  onChange={(e) => setFName(e.target.value)}
+                  required
+                  className="border-b-2 focus:border-gray-400 outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  value={LName}
+                  onChange={(e) => setLName(e.target.value)}
+                  required
+                  className="border-b-2 focus:border-gray-400 outline-none"
+                />
+              </div>
+
+              <input
+                type="email"
+                placeholder="Email"
+                value={Email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full border-b-2 focus:border-gray-400 outline-none"
+              />
+
+              <input
+                type="text"
+                placeholder="Phone number"
+                value={Phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="w-full border-b-2 focus:border-gray-400 outline-none"
+              />
+
+              <select
+                value={Department}
+                onChange={(e) => setDepartment(e.target.value)}
+                required
+                className="w-full border-b-2 focus:border-gray-400 outline-none"
+              >
+                <option value="" disabled>Select Department</option>
+                <option value="Accounts">Accounts</option>
+                <option value="Admission">Admission</option>
+                <option value="Academics">Academics</option>
+              </select>
+
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+                required
+                className="w-full border-b-2 focus:border-gray-400 outline-none"
+              />
+
+              <input
+                type="password"
+                placeholder="Confirm password"
+                value={CPassword}
+                onChange={(e) => setCPassword(e.target.value)}
+                required
+                className="w-full border-b-2 focus:border-gray-400 outline-none"
+              />
+
+              {error && <p className="text-red-600 text-xs text-center">{error}</p>}
+
+              <button
+                type="submit"
+                disabled={Loader}
+                className="w-full bg-[#15B392] text-white py-2 rounded-lg"
+              >
+                {Loader ? "Submitting..." : "Submit"}
+              </button>
+
+              <p className="text-center text-sm text-gray-600">
+                Already have an account? <a href="/login" className="text-[#15B392]">Sign in</a>
+              </p>
+              <button onClick={closeDialog} className="text-red-500 text-center w-full mt-2">Close</button>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );
