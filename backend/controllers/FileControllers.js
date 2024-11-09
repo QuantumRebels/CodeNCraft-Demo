@@ -1,4 +1,5 @@
 import { files } from "../models/file.models.js";
+import { Messages } from "../models/messages.models.js";
 
 const createfile = async (req, res) => {
   const { fileName,
@@ -41,16 +42,12 @@ const getfiles=async(req,res)=>{
 }
 
 const requestfile=async(req,res)=>{
-    const {id}=req.params
-    const {name,dept}=req.body;
+   
+    const {id,currentuser,dept}=req.body;
     try {
-        const file=await files.findById(id)
+        const file=await files.findByIdAndUpdate(id,{Status:"Requested",RequestedBy:`${currentuser}(${dept})`})
 
-        console.log(file)
-        if(file){
-            file.status=`Requested By ${name} (${dept})`
-            res.json(file)
-        }
+        
     } catch (error) {
         console.error(error)
         res.status(500).json("Server Error")
@@ -58,10 +55,10 @@ const requestfile=async(req,res)=>{
 }
 
 const approvefile=async(req,res)=>{
-    const {id}=req.body
-    console.log(id)
+    const {fileid}=req.body
+    console.log(fileid)
     try {
-        const file=await files.findByIdAndUpdate(id,{status:"Approved"})
+        const file=await files.findByIdAndUpdate(fileid,{Status:"Approved"})
         console.log(file)
         
     }catch(error){
@@ -70,11 +67,20 @@ const approvefile=async(req,res)=>{
     }
 }
 const rejectfile=async(req,res)=>{
-    const {id}=req.params
+    const {id,currentUser,Department,FileName}=req.body
+    console.log(req.body)
     console.log(id)
     try {
-        const file=await files.findByIdAndUpdate(id,{status:"Rejected"})
-        console.log(file)
+        const message=await Messages.create({
+            FileName:FileName,
+            Name:currentUser,
+            Department:Department,
+            Message:"File has been rejected",
+            
+        })
+        const file=await files.findByIdAndDelete(id)
+        
+        
         
     }catch(error){
         console.error(error)
@@ -83,7 +89,7 @@ const rejectfile=async(req,res)=>{
 }
 
 const updateFile=async(req,res)=>{
-    const {id}=req.params
+    const {id}=req.body
     const { Title, Description, filetype, sourcedept, Initiator, ImageUrl } = req.body;
     console.log(req.body)
 

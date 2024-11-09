@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const FileRequestAdmin = () => {
+  const currentUser=window.localStorage.getItem('InvertrekUsername')
+  const Department=window.localStorage.getItem('InvertrekUserDepartment')
 
   const [requests, setRequests] = useState([])
 
@@ -29,10 +31,10 @@ const FileRequestAdmin = () => {
     // e.preventDefault()
     console.log(fileid)
     try {
-      await axios.put(`${import.meta.env.VITE_DEV_URL}/files/api/approve`,{fileid})
+      await axios.post(`${import.meta.env.VITE_DEV_URL}files/api/approve`,{fileid})
       .then(res=>{
         console.log(res.data)
-        
+        window.location.reload()
       })
     } catch (error) {
       console.error(error)
@@ -41,10 +43,17 @@ const FileRequestAdmin = () => {
   };
 
   // Function to handle the Reject action
-  const handleReject = (fileId) => {
-    setRequests(requests.map(request =>
-      request.id === fileId ? { ...request, status: 'Rejected' } : request
-    ));
+  const handleReject = async(id,FileName) => {
+    console.log(id)
+    try {
+      await axios.post(`${import.meta.env.VITE_DEV_URL}files/api/reject`,{id,currentUser,Department,FileName})
+      .then(res=>{
+        console.log(res.data)
+        window.location.reload()
+      })
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   return (
@@ -69,10 +78,10 @@ const FileRequestAdmin = () => {
               <td>{request.SourceDept}</td>
               <td>{request.Status}</td>
               <td>
-                {request.Status === 'pending' ? (
+                {request.Status === 'Requested' ? (
                   <>
                     <button onClick={() => handleAccept(request._id)} className="accept-btn ml-96">Accept</button>
-                    <button onClick={() => handleReject(request._id)} className="reject-btn ml-96">Reject</button>
+                    <button onClick={() => handleReject(request._id,request.FileName)} className="reject-btn ml-96">Reject</button>
                   </>
                 ) : (
                   <span>{request.status}</span>
