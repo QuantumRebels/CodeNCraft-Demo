@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const FileRequestAdmin = () => {
+
+  const currentUser=window.localStorage.getItem('InvertrekUsername')
+  const Department=window.localStorage.getItem('InvertrekUserDepartment')
+
   // State for file requests
   const [requests, setRequests] = useState([]);
+
 
   // State for modal visibility and selected request
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,28 +30,38 @@ const FileRequestAdmin = () => {
   }, []);
 
   // Function to handle the Accept action
-  const handleAccept = async (fileId) => {
+  const handleAccept = async (fileid) => {
+    
     try {
-      const res = await axios.put(`${import.meta.env.VITE_DEV_URL}/files/api/approve`, { fileId });
-      console.log(res.data);
-      // Update the request status in local state after approval
-      setRequests(requests.map(request =>
-        request.id === fileId ? { ...request, status: 'Approved' } : request
-      ));
+
+      await axios.post(`${import.meta.env.VITE_DEV_URL}files/api/approve`,{fileid,currentUser,Department})
+      .then(res=>{
+        console.log(res.data)
+        window.location.reload()
+      })
+
     } catch (error) {
       console.error(error);
     }
   };
 
   // Function to handle the Reject action
-  const handleReject = (fileId) => {
-    setRequests(requests.map(request =>
-      request.id === fileId ? { ...request, status: 'Rejected' } : request
-    ));
+  const handleReject = async(id,FileName) => {
+    console.log(id)
+    try {
+      await axios.post(`${import.meta.env.VITE_DEV_URL}files/api/reject`,{id,currentUser,Department,FileName})
+      .then(res=>{
+        console.log(res.data)
+        window.location.reload()
+      })
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   // Function to open the modal with details
   const handleDetailsClick = (request) => {
+
     setSelectedRequest(request);
     setIsModalOpen(true);
   };
@@ -75,10 +90,12 @@ const FileRequestAdmin = () => {
               <td>{request.id}</td>
               <td>{request.department}</td>
               <td>
-                {request.status === 'Pending' ? (
+
+                {request.Status === 'Requested' ? (
                   <>
-                    <button onClick={() => handleAccept(request.id)} className="accept-btn ml-2">Accept</button>
-                    <button onClick={() => handleReject(request.id)} className="reject-btn ml-2">Reject</button>
+                    <button onClick={() => handleAccept(request._id)} className="accept-btn ml-96">Accept</button>
+                    <button onClick={() => handleReject(request._id,request.FileName)} className="reject-btn ml-96">Reject</button>
+
                   </>
                 ) : (
                   <span>{request.status}</span>

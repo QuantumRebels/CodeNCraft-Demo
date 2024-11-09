@@ -1,67 +1,62 @@
-import React, { useState } from 'react';
-import { BsPlus } from 'react-icons/bs';
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const FileStatusTable = () => {
+  const [fileData, setFiledata] = useState([])
+  const currentuser=window.localStorage.getItem('InvertrekUsername')
+  const dept=window.localStorage.getItem('InvertrekUserDepartment')
+
+
+  const fetchfiles=async()=>{
+    try {
+      await axios.get(`${import.meta.env.VITE_DEV_URL}files/api/getallfiles`)
+      .then(response => {
+        console.log(response.data)
+        setFiledata(response.data)
+
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchfiles()
+  },[])
   // Data for each file
-  const fileData = [
-    {
-      id: 'F001',
-      department: 'Finance',
-      location: 'Office 1',
-      status: 'Pending',
-      owner: 'John Doe',
-      contents: 'Budget Reports',
-      description: 'Monthly budget reports and analysis for Q1.',
-    },
-    {
-      id: 'F002',
-      department: 'HR',
-      location: 'Office 2',
-      status: 'Approved',
-      owner: 'Jane Smith',
-      contents: 'Employee Records',
-      description: 'Employee records and payroll information.',
-    },
-    {
-      id: 'F003',
-      department: 'IT',
-      location: 'Server Room',
-      status: 'In Progress',
-      owner: 'Michael Johnson',
-      contents: 'Server Maintenance Logs',
-      description: 'Logs for server maintenance and updates.',
-    },
-    {
-      id: 'F004',
-      department: 'Marketing',
-      location: 'Office 3',
-      status: 'Pending',
-      owner: 'Alice Brown',
-      contents: 'Campaign Plans',
-      description: 'Plans for upcoming marketing campaigns.',
-    },
-    {
-      id: 'F005',
-      department: 'Legal',
-      location: 'Office 4',
-      status: 'Completed',
-      owner: 'Sarah Wilson',
-      contents: 'Contracts',
-      description: 'Signed contracts and agreements.',
-    },
-  ];
+  
 
-  // State to handle modal visibility and selected file
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const handleRequestClick = (id) => {
+    console.log(id)
 
-  const handleRequestClick = (fileId) => {
-    alert(`Request sent for file ${fileId}`);
+    try {
+      axios.post(`${import.meta.env.VITE_DEV_URL}files/api/request`,{id,currentuser,dept})
+      .then(res=>{
+        console.log(res.data)
+        alert(res.data)
+        window.location.reload()
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
-  const handleDetailsClick = (file) => {
-    setSelectedFile(file);
-    setIsModalOpen(true);
+  const handleDetailsClick = async(id) => {
+    console.log(id)
+    try {
+      await axios.get(`${import.meta.env.VITE_DEV_URL}files/api/details`,{id})
+      .then(res=>{
+        console.log(res.data)
+        setSelectedFile(res.data)
+        setIsModalOpen(true);
+        
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    
   };
 
   const closeModal = () => {
@@ -75,7 +70,7 @@ const FileStatusTable = () => {
       <table className="status-table">
         <thead>
           <tr>
-            <th>File ID</th>
+            <th>File Name</th>
             <th>Department</th>
             <th>Current Location</th>
             <th>Status</th>
@@ -86,22 +81,32 @@ const FileStatusTable = () => {
         <tbody>
           {fileData.map((file) => (
             <tr key={file.id}>
-              <td className="text-gray-900">{file.id}</td>
-              <td className="text-gray-900">{file.department}</td>
-              <td className="text-gray-900">{file.location}</td>
-              <td className="text-gray-900">{file.status}</td>
+
+              <td className='text-gray-900'>{file.FileName}</td>
+              <td className='text-gray-900'>{file.SourceDept}</td>
+              <td className='text-gray-900'>{file.SourceDept} Office</td>
+              <td className='text-gray-900'>{file.Status}</td>
+              
               <td>
-                <button
-                  className="request-link mr-2"
-                  onClick={() => handleRequestClick(file.id)}
+                {(file.Status !=='pending')? (
+                  <p className="text-black font-bold">
+                    Requested
+                  </p>
+                ):(
+                  <button 
+                  className="request-link" 
+                  onClick={() => handleRequestClick(file._id)}
+
                 >
                   Request
                 </button>
+                )}
+                
               </td>
               <td>
                 <button
                   className="details-link"
-                  onClick={() => handleDetailsClick(file)}
+                  onClick={() => handleDetailsClick(file._id)}
                 >
                   <BsPlus className="text-orange-500 text-2xl" /> {/* Display "+" icon here */}
                 </button>
@@ -116,9 +121,9 @@ const FileStatusTable = () => {
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg max-w-lg w-full">
             <h3 className="text-2xl font-semibold mb-4 text-black">File Details</h3>
-            <p className='text-black'><strong>File ID:</strong> {selectedFile.id}</p>
-            <p className='text-black'><strong>Owned By:</strong> {selectedFile.owner}</p>
-            <p className='text-black'><strong>Department:</strong> {selectedFile.department}</p>
+            <p className='text-black'><strong>File ID:</strong> {selectedFile._id}</p>
+            <p className='text-black'><strong>Owned By:</strong> {selectedFile.SourceDept}</p>
+            <p className='text-black'><strong>Department:</strong> {selectedFile.Department}</p>
             <p className='text-black'><strong>Location:</strong> {selectedFile.location}</p>
             <p className='text-black'><strong>Status:</strong> {selectedFile.status}</p>
             <p className='text-black'><strong>Contents:</strong> {selectedFile.contents}</p>

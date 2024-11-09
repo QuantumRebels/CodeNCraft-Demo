@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 const Signup = () => {
+
+  const currentUser=window.localStorage.getItem('userRole')
+
   const [FName, setFName] = useState("");
   const [LName, setLName] = useState("");
   const [Email, setEmail] = useState("");
@@ -25,19 +28,40 @@ const Signup = () => {
   const handleSubmit =  (e) => {
     e.preventDefault()
     const Username=FName+" "+LName
-    try {
-      // setLoader(true)
-      axios.post(`${import.meta.env.VITE_DEV_URL}users/register`,{Username,Email,Phone,Department,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
-      .then(res=>{
-        console.log(res)
-        alert("User Registered Successfully")
+    if(currentUser==="Admin"){
+
+      try {
+        // setLoader(true)
+        axios.post(`${import.meta.env.VITE_DEV_URL}users/registerAdmin`,{Username,Email,Phone,Department,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
+        .then(res=>{
+          console.log(res.data.message)
+          alert(res.data.message)
+          
+          setLoader(false)
+          // window.localStorage.setItem("Username",FName)
+          // navigate("/")
+        })
+      } catch (error) {
+        seterror("Failed to register. Please try again later.")
         setLoader(false)
-        // window.localStorage.setItem("Username",FName)
-        // navigate("/")
-      })
-    } catch (error) {
-      seterror("Failed to register. Please try again later.")
-      setLoader(false)
+      }
+    }
+    if(currentUser==="Invertory Staff"){
+      try {
+        // setLoader(true)
+        axios.post(`${import.meta.env.VITE_DEV_URL}users/registerAdmin`,{Username,Email,Phone,Department,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
+        .then(res=>{
+          console.log(res)
+          alert("User Registered Successfully")
+          
+          setLoader(false)
+          // window.localStorage.setItem("Username",FName)
+          // navigate("/")
+        })
+      } catch (error) {
+        seterror("Failed to register. Please try again later.")
+        setLoader(false)
+      }
     }
   }
 
@@ -126,9 +150,9 @@ const Signup = () => {
             className="w-full text-gray-400 rounded-md border border-gray-400 py-2 px-3"
           >
             <option value="" disabled>Select Role</option>
-            <option value="Admin" >CSE</option>
-            <option value="User">IT</option>
-            <option value="Inventory">ECE</option>
+            <option value="Accounts" >Accounts</option>
+            <option value="Admission">Admission</option>
+            <option value="Academeics">Academics</option>
           </select>
         </div>
 

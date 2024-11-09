@@ -29,6 +29,10 @@ const FileSchema = new mongoose.Schema(
       required: true,
       default: null,
     },
+    RequestedBy:{
+      type: String,
+      default: null,
+    },
     AtatchedDocs: {
       type: String,
       default: null,

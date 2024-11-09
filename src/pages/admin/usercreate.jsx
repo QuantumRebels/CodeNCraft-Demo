@@ -21,6 +21,7 @@ const FileCreateDialog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle file creation logic here (e.g., API call)
+    // axios.post(`${import.meta.env.VITE_DEV_URL}users/registerAdmin`,{Username,Email,Phone,Department,password}) 
     setMessage('File created successfully!');
     setFileName('');
     setFileDescription('');

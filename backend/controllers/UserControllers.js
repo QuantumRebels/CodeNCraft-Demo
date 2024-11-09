@@ -38,60 +38,60 @@ const login = async (req, res) => {
     
 };
 
-const Signup = async (req, res) => {
-  const { Username, Email, Phone,Department, password } = req.body;
-  console.log("Request body:", req.body);
+// const Signup = async (req, res) => {
+//   const { Username, Email, Phone,Department, password } = req.body;
+//   console.log("Request body:", req.body);
 
-  console.log("Password ", password);
+//   console.log("Password ", password);
 
-  try {
-    // Check if the user already exists
-    const existingUser = await Users.findOne({ Email });
-    if (existingUser) {
-      return res.status(500).json({message:"User already exists. Please log in."});
-    }
+//   try {
+//     // Check if the user already exists
+//     const existingUser = await Users.findOne({ Email });
+//     if (existingUser) {
+//       return res.status(500).json({message:"User already exists. Please log in."});
+//     }
 
-    // Hash the password
-    const saltRounds = 10; // Recommended number of salt rounds
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+//     // Hash the password
+//     const saltRounds = 10; // Recommended number of salt rounds
+//     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Create the new user
-    await Users.create({
-      Name: Username,
-      Email,
-      Department: Department,
-      PhoneNumber: Phone,
-      Password: hashedPassword,
-    });
+//     // Create the new user
+//     await Users.create({
+//       Name: Username,
+//       Email,
+//       Department: Department,
+//       PhoneNumber: Phone,
+//       Password: hashedPassword,
+//     });
 
-    // Respond with success
-    res.json( "User registered successfully" );
-  } catch (error) {
-    console.error("Error during signup:", error.message);
+//     // Respond with success
+//     res.json( "User registered successfully" );
+//   } catch (error) {
+//     console.error("Error during signup:", error.message);
 
-    // Respond with an error
-    res.status(500).json({message: "Error during signup:", error:error.message})
-  }
-};
+//     // Respond with an error
+//     res.status(500).json({message: "Error during signup:", error:error.message})
+//   }
+// };
 
 const SignupAdmin = async (req, res) => {
-  const { Username, Email, Department, Phone, Password } = req.body;
+  const { Username, Email, Department, Phone, password } = req.body;
   try {
     const existingUser = await Users.findOne({ Email: Email });
     if (existingUser) {
       return res.status(500).json({message: "Staff already exists .." });
     } else {
-      const hashedPassword = await bcrypt.hash(Password, 5);
-      await Users({
+      const hashedPassword = await bcrypt.hash(password, 5);
+       await Users.create({
         Name: Username,
         Email: Email,
         Department: Department,
         PhoneNumber: Phone,
         Password: hashedPassword,
         userRole: "Department Staff",
-      }).then(() => {
-        res.status(200).json({message:"Staff registered successfully"});
-      });
+      }).then(
+        res.status(200).json({message:"Staff registered successfully"})
+      )
     }
   } catch (error) {
     console.log(error);
@@ -126,4 +126,4 @@ const SignupInvertoryStaff = async (req, res) => {
   }
 };
 
-export default { login, Signup, SignupInvertoryStaff, SignupAdmin };
+export default { login,  SignupInvertoryStaff, SignupAdmin };

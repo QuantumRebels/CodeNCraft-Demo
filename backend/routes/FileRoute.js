@@ -7,12 +7,14 @@ FileRouter.post('/create',FileControllers.createfile)
 
 FileRouter.get('/getallfiles',FileControllers.getfiles)
 
-FileRouter.patch('/request',FileControllers.requestfile)
+FileRouter.post('/request',FileControllers.requestfile)
 
-FileRouter.patch('/reject',FileControllers.rejectfile)
+FileRouter.post('/reject',FileControllers.rejectfile)
 
-FileRouter.put('/approve',FileControllers.approvefile)
+FileRouter.post('/approve',FileControllers.approvefile)
 
-FileRouter.patch('/update',FileControllers.updateFile)
+FileRouter.post('/update',FileControllers.updateFile)
+
+FileRouter.get('/details',FileControllers.details)
 
 export default FileRouter;
