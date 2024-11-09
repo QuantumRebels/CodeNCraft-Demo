@@ -19,6 +19,7 @@ const SchoolManagementLandingPage = () => {
                     <h1 className="text-3xl md:text-6xl font-bold mb-6 text-gray-800">
                         Welcome to InvenTrek
                     </h1>
+                    <p className='text-2xl md:text-4xl font-bold  text-[#117554] mb-8'>Seamless File Movement , Smarter Inventory Management</p>
                     <p className="text-lg mb-8 text-gray-600">
                     Say goodbye to manual tracking and inefficiencies. InvenTrak is designed to simplify file movement between departments and automate inventory processes at IIIT Bhubaneswar. Our goal is to improve operational efficiency, enhance transparency, and reduce administrative overhead.
                     </p>

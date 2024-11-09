@@ -64,8 +64,8 @@ const InventoryTable = () => {
   );
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>Inventory Table</h1>
+    <div style={styles.container} className="text-black">
+      <h1 style={styles.header} className="text-2xl font-semibold">Inventory Table</h1>
       <div style={styles.filters}>
         <input
           type="text"
@@ -118,7 +118,7 @@ const InventoryTable = () => {
 
 const styles = {
   container: {
-    backgroundColor: "#D3EE98", // Pastel green background
+    backgroundColor: "white", // Pastel green background
     padding: "15px",
     borderRadius: "10px",
     maxWidth: "1300px",

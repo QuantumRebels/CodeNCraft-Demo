@@ -1,45 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const FileRequestAdmin = () => {
+
   const currentUser=window.localStorage.getItem('InvertrekUsername')
   const Department=window.localStorage.getItem('InvertrekUserDepartment')
 
-  const [requests, setRequests] = useState([])
+  // State for file requests
+  const [requests, setRequests] = useState([]);
 
-    const fetchdata=async()=>{
-        try {
-            await axios.get(`${import.meta.env.VITE_DEV_URL}files/api/getallfiles`)
-            .then(res=>{
-                console.log(res.data)
-                setRequests(res.data)
-            })
-        } catch (error) {
-            console.error(error)
-        }
+
+  // State for modal visibility and selected request
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+
+  // Function to fetch data from the API
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_DEV_URL}files/api/getallfiles`);
+      // Ensure requests are set to an array
+      setRequests(Array.isArray(res.data) ? res.data : []);
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    useEffect(()=>{
-        fetchdata()
-    },[])
-
-  // Sample data for file requests
-  // const [requests, setRequests]
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   // Function to handle the Accept action
-  const handleAccept = async(fileid) => {
-    // e.preventDefault()
-    console.log(fileid)
+  const handleAccept = async (fileid) => {
+    
     try {
-      await axios.post(`${import.meta.env.VITE_DEV_URL}files/api/approve`,{fileid})
+
+      await axios.post(`${import.meta.env.VITE_DEV_URL}files/api/approve`,{fileid,currentUser,Department})
       .then(res=>{
         console.log(res.data)
         window.location.reload()
       })
+
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-    
   };
 
   // Function to handle the Reject action
@@ -56,41 +59,76 @@ const FileRequestAdmin = () => {
     }
   };
 
+  // Function to open the modal with details
+  const handleDetailsClick = (request) => {
+
+    setSelectedRequest(request);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRequest(null);
+  };
+
   return (
-    <div className="file-request-admin">
-      <h2>Manage File Requests</h2>
+    <div className="w-full">
+      <h2 className="text-2xl p-4 font-semibold">Manage File Requests</h2>
       <table className="file-request-table">
         <thead>
           <tr>
-            <th>File Name</th>
-            
-
-            <th>Source Department</th>
-            <th>Status</th>
-            
+            <th>File ID</th>
+            <th>Department</th>
             <th>Actions</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
-          {requests.map((request,index) => (
-            <tr key={index}>
-              <td>{request.FileName}</td>
-              <td>{request.SourceDept}</td>
-              <td>{request.Status}</td>
+          {Array.isArray(requests) && requests.map((request) => (
+            <tr key={request.id}>
+              <td>{request.id}</td>
+              <td>{request.department}</td>
               <td>
+
                 {request.Status === 'Requested' ? (
                   <>
                     <button onClick={() => handleAccept(request._id)} className="accept-btn ml-96">Accept</button>
                     <button onClick={() => handleReject(request._id,request.FileName)} className="reject-btn ml-96">Reject</button>
+
                   </>
                 ) : (
                   <span>{request.status}</span>
                 )}
               </td>
+              <td>
+                <button onClick={() => handleDetailsClick(request)} className="details-link">
+                  <span className="text-blue-500">+</span>
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Modal for request details */}
+      {isModalOpen && selectedRequest && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg max-w-lg w-full">
+            <h3 className="text-2xl text-black font-semibold mb-4">Request Details</h3>
+            <p className="text-black"><strong>File ID:</strong> {selectedRequest.id}</p>
+            <p className="text-black"><strong>Department:</strong> {selectedRequest.department}</p>
+            <p className="text-black"><strong>Current Location:</strong> {selectedRequest.currentLocation}</p>
+            <p className="text-black"><strong>Status:</strong> {selectedRequest.status}</p>
+            <button
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              onClick={closeModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
