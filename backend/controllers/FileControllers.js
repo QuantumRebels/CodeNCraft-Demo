@@ -58,7 +58,7 @@ const approvefile=async(req,res)=>{
     const {fileid}=req.body
     console.log(fileid)
     try {
-        const file=await files.findByIdAndUpdate(fileid,{Status:"Approved"})
+        const file=await files.findByIdAndUpdate(fileid,{Status:"Approved",Location:`${currentUser}(${Department})`})
         console.log(file)
         
     }catch(error){
@@ -95,4 +95,14 @@ const updateFile=async(req,res)=>{
 
 }
 
-export default {createfile,requestfile,approvefile,updateFile,getfiles,rejectfile}
+const details=async(req,res)=>{
+    const {id}=req.body
+    try {
+        const file=await files.findById(id)
+        res.json(file)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export default {createfile,requestfile,approvefile,updateFile,getfiles,rejectfile,details}

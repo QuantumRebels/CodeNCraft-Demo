@@ -15,4 +15,6 @@ FileRouter.post('/approve',FileControllers.approvefile)
 
 FileRouter.post('/update',FileControllers.updateFile)
 
+FileRouter.get('/details',FileControllers.details)
+
 export default FileRouter;
