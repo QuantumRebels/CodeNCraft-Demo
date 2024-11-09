@@ -16,7 +16,7 @@ const FileStatusTable = () => {
 
   return (
     <div className="table-container">
-      <h2>Current Status</h2>
+      <h2>Claim Files</h2>
       <table className="status-table">
         <thead>
           <tr>

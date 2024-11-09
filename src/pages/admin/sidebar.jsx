@@ -26,12 +26,12 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
             </li>
             <li className='sidebar-list-item'>
                 <a href="">
-                    <MdOutlineTrackChanges className='icon'/> Track Status
+                    <FaUser className='icon'/> Create User
                 </a>
             </li>
             <li className='sidebar-list-item'>
                 <a href="/request">
-                    <FcDisclaimer  className='icon'/> Request File
+                    <FcDisclaimer  className='icon'/> Create File
                 </a>
             </li>
         
