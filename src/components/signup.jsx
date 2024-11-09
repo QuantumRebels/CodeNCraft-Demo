@@ -10,6 +10,7 @@ const Signup = () => {
   const [CPassword, setCPassword] = useState("");
   const [password, setpassword] = useState("");
   const [Phone, setPhone] = useState("");
+  const [Department, setDepartment] = useState("")
 
   const [userRole, setuserRole] = useState(""); // Added user role stat
 
@@ -26,7 +27,7 @@ const Signup = () => {
     const Username=FName+" "+LName
     try {
       // setLoader(true)
-      axios.post(`${import.meta.env.VITE_DEV_URL}users/register`,{Username,Email,Phone,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
+      axios.post(`${import.meta.env.VITE_DEV_URL}users/register`,{Username,Email,Phone,Department,password}) // replace https://craftncode.onrender.com/ in place of import.meta.env.VITE_DEV_URL
       .then(res=>{
         console.log(res)
         alert("User Registered Successfully")
@@ -120,8 +121,8 @@ const Signup = () => {
          <div className="space-y-2">
           <label className="text-sm font-medium text-[#A1A1D]">Department</label>
           <select
-            value={userRole}
-            onChange={(e) => setuserRole(e.target.value)}
+            value={Department}
+            onChange={(e) => setDepartment(e.target.value)}
             className="w-full text-gray-400 rounded-md border border-gray-400 py-2 px-3"
           >
             <option value="" disabled>Select Role</option>

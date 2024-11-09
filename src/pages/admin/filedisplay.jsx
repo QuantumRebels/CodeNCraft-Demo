@@ -1,20 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const FileRequestAdmin = () => {
+
+  const [requests, setRequests] = useState([])
+
+    const fetchdata=async()=>{
+        try {
+            await axios.get(`${import.meta.env.VITE_DEV_URL}files/api/getallfiles`)
+            .then(res=>{
+                console.log(res.data)
+                setRequests(res.data)
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(()=>{
+        fetchdata()
+    },[])
+
   // Sample data for file requests
-  const [requests, setRequests] = useState([
-    { id: 'F001', department: 'Finance', currentLocation: 'Office 1', status: 'Pending' },
-    { id: 'F002', department: 'HR', currentLocation: 'Office 2', status: 'Pending' },
-    { id: 'F003', department: 'IT', currentLocation: 'Server Room', status: 'Pending' },
-    { id: 'F004', department: 'Marketing', currentLocation: 'Office 3', status: 'Pending' },
-    { id: 'F005', department: 'Legal', currentLocation: 'Office 4', status: 'Pending' },
-  ]);
+  // const [requests, setRequests]
 
   // Function to handle the Accept action
-  const handleAccept = (fileId) => {
-    setRequests(requests.map(request =>
-      request.id === fileId ? { ...request, status: 'Approved' } : request
-    ));
+  const handleAccept = async(fileid) => {
+    // e.preventDefault()
+    console.log(fileid)
+    try {
+      await axios.put(`${import.meta.env.VITE_DEV_URL}/files/api/approve`,{fileid})
+      .then(res=>{
+        console.log(res.data)
+        
+      })
+    } catch (error) {
+      console.error(error)
+    }
+    
   };
 
   // Function to handle the Reject action
@@ -30,22 +53,26 @@ const FileRequestAdmin = () => {
       <table className="file-request-table">
         <thead>
           <tr>
-            <th>File ID</th>
-            <th>Department</th>
+            <th>File Name</th>
+            
+
+            <th>Source Department</th>
+            <th>Status</th>
             
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {requests.map((request) => (
-            <tr key={request.id}>
-              <td>{request.id}</td>
-              <td>{request.department}</td>
+          {requests.map((request,index) => (
+            <tr key={index}>
+              <td>{request.FileName}</td>
+              <td>{request.SourceDept}</td>
+              <td>{request.Status}</td>
               <td>
-                {request.status === 'Pending' ? (
+                {request.Status === 'pending' ? (
                   <>
-                    <button onClick={() => handleAccept(request.id)} className="accept-btn ml-96">Accept</button>
-                    <button onClick={() => handleReject(request.id)} className="reject-btn ml-96">Reject</button>
+                    <button onClick={() => handleAccept(request._id)} className="accept-btn ml-96">Accept</button>
+                    <button onClick={() => handleReject(request._id)} className="reject-btn ml-96">Reject</button>
                   </>
                 ) : (
                   <span>{request.status}</span>
