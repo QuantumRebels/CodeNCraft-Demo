@@ -33,8 +33,13 @@ const LoginForm = () => {
             window.localStorage.setItem("InvertrekuserRole",res.data.user.userRole)
             window.localStorage.setItem("InvertrekUserDepartment",res.data.user.Department)
 
+            if(userRole==="Admin"){
 
-            navigate("/admindashboard");
+              navigate("/admindashboard");
+            }
+            if(userRole==="Department Staff"){
+              navigate('/userdashboard')
+            }
             window.location.reload();
           } else {
             setError(res.data);
