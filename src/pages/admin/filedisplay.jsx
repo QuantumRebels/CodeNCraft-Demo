@@ -99,7 +99,7 @@ const FileRequestAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {/* { requests.map((request,index) => (
+           { requests.map((request,index) => (
             <tr key={index}>
               <td>{request.FileName}</td>
               <td>{request.InitiatorName}</td>
@@ -115,6 +115,7 @@ const FileRequestAdmin = () => {
                   <span>{request.Status}</span>
                 )}
               </td>
+              
               <td>{request.RequestedBy}</td>
               <td>
                 <button onClick={() => handleDetailsClick(request._id)} className="details-link">
@@ -122,7 +123,7 @@ const FileRequestAdmin = () => {
                 </button>
               </td>
             </tr>
-          ))} */}
+          ))} 
         </tbody>
       </table>
 
